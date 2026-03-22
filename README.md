@@ -42,3 +42,10 @@ while (queue.isEmpty()) {
 }
 
 👉 Thread re-checks condition → ✔️ SAFE
+
+
+We use while instead of if because of spurious wakeups and multiple threads waking up at the same time. When a thread wakes up from await(), it must re-check the condition to ensure it is safe to proceed. Using if can lead to race conditions like queue overflow or underflow, whereas while guarantees correctness.”
+
+
+
+“A bounded blocking queue ensures thread-safe communication between producers and consumers. I use a mutex (lock) to ensure mutual exclusion and condition variables to block threads when the queue is full or empty. Producers wait on notFull and consumers wait on notEmpty. I use while loops to handle spurious wakeups and signal the opposite side after every operation. This ensures no race conditions, no deadlocks, and correct coordination between multiple threads.”
